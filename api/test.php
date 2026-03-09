@@ -1,14 +1,11 @@
 <?php
-header('Content-Type: application/json');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$response = [
-    "status" => "success",
-    "message" => "StockCrop API is working",
-    "time" => date("Y-m-d H:i:s")
-];
-
-echo json_encode($response);
+include 'db_connect.php';
 ?>
+
 
 
 
