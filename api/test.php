@@ -1,21 +1,25 @@
 <?php
-// Load Railway environment variables (if on Railway) or set manually for local testing
-$host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?? 'maglev.proxy.rlwy.net';
-$port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? 59289;
-$user = $_SERVER['MYSQLUSER'] ?? getenv('MYSQLUSER') ?? 'root';
-$pass = $_SERVER['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?? 'your_password_here';
-$db   = $_SERVER['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?? 'railway';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$host = trim((string)(getenv("DB_HOST") ?: ""));
+$user = trim((string)(getenv("DB_USER") ?: ""));
+$pass = (string)(getenv("DB_PASS") ?: "");
+$db   = trim((string)(getenv("DB_NAME") ?: ""));
+$port = (int)(getenv("DB_PORT") ?: 3306);
 
-try {
-    $conn = new mysqli($host, $user, $pass, $db, (int)$port);
-    $conn->set_charset('utf8mb4');
-    echo "Connected successfully to: " . $conn->host_info . "\n";
-} catch (mysqli_sql_exception $e) {
-    error_log("DB connect failed: " . $e->getMessage());
-    die("Database connection failed: " . $e->getMessage());
+if ($host === "" || $user === "" || $db === "" || $port <= 0) {
+    die("Missing DB env vars. Host=$host Port=$port User=$user DB=$db");
 }
+
+$conn = new mysqli($host, $user, $pass, $db, $port);
+
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+
+$conn->set_charset("utf8mb4");
 ?>
 
 
