@@ -1,19 +1,19 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$host = 'maglev.proxy.rlwy.net';    // ✅ Your green proxy host
+$port = 59289;                      // ✅ Your green proxy port  
+$user = 'root';                     // From MYSQLUSER variable
+$pass = 'YOUR_MYSQLPASSWORD';       // From Variables tab (reveal it)
+$db   = 'railway';                  // From MYSQLDATABASE variable
 
-$host = getenv("DB_HOST") ?: '';
-$user = getenv("DB_USER") ?: '';
-$pass = getenv("DB_PASS") ?: '';
-$db   = getenv("DB_NAME") ?: '';
-$port = (int)(getenv("DB_PORT") ?: 3306);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $conn = new mysqli($host, $user, $pass, $db, $port);
 
 if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    die("❌ Connection failed: " . $conn->connect_error);
 }
 
-$conn->set_charset("utf8mb4");
+echo "✅ Connected successfully to maglev.proxy.rlwy.net:59289!";
+$conn->close();
 ?>
+
