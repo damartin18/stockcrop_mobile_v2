@@ -1,7 +1,7 @@
 <?php
 // Load Railway environment variables (if on Railway) or set manually for local testing
 $host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?? 'maglev.proxy.rlwy.net';
-$port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? 59589;
+$port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?? 59289;
 $user = $_SERVER['MYSQLUSER'] ?? getenv('MYSQLUSER') ?? 'root';
 $pass = $_SERVER['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?? 'your_password_here';
 $db   = $_SERVER['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?? 'railway';
@@ -17,4 +17,5 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 ?>
+
 
